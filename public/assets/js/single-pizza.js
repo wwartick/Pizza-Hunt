@@ -10,16 +10,20 @@ const $newCommentForm = document.querySelector('#new-comment-form');
 let pizzaId;
 
 function getPizza() {
-
+  // get id of pizza
   const searchParams = new URLSearchParams(document.location.search.substring(1));
   const pizzaId = searchParams.get('id');
 
+  // get pizzaInfo
   fetch(`/api/pizzas/${pizzaId}`)
     .then(response => {
+      console.log(response);
       if (!response.ok) {
-        throw new Error({ message: 'Something went wrong!'});
+        console.log('hi');
+        throw new Error({ message: 'Something went wrong!' });
       }
-       return response.json();
+
+      return response.json();
     })
     .then(printPizza)
     .catch(err => {
@@ -110,25 +114,25 @@ function handleNewCommentSubmit(event) {
 
   fetch(`/api/comments/${pizzaId}`, {
     method: 'POST',
-    headers: { 
+    headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(formData)
   })
-  .then(response => {
-    if (!response.ok){
-      throw new Error('Something went wrong!');
-    }
-    response.json();
-  })
-  .then(commentResponse => {
-    console.log(commentResponse);
-    location.reload();
-  })
-  .catch(err => {
-    console.log(err);
-  });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+      response.json();
+    })
+    .then(commentResponse => {
+      console.log(commentResponse);
+      // location.reload();
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 function handleNewReplySubmit(event) {
@@ -155,21 +159,21 @@ function handleNewReplySubmit(event) {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body:JSON.stringify(formData)
+    body: JSON.stringify(formData)
   })
-  .then(response => {
-    if(!response.ok) {
-      throw new Error('Something went wrong!');
-    }
-    response.json();
-  })
-  .then (commentResponse => {
-    console.log(commentResponse);
-    location.reload();
-  })
-  .catch(err => {
-    console.log(err);
-  });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+      response.json();
+    })
+    .then(commentResponse => {
+      console.log(commentResponse);
+      location.reload();
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 $backBtn.addEventListener('click', function() {
